@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mensagem Administrativa</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Enviada em: {{ messages.created_at }}</ion-card-subtitle>
+      <ion-card-title>{{ messages.title }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p [innerHTML]="messages.body"></p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

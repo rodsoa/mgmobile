@@ -1,0 +1,32 @@
+$white-color: #fff;
+$height100: 100%;
+
+ion-content {
+  --background: #ffff00 url('../../../assets/img/bg-login-screen-2.jpg') no-repeat center center / cover !important;
+}
+
+ion-grid {
+  width:100%;
+  height: $height100;
+}
+
+ion-row {
+  height: $height100;
+}
+
+ion-col {
+  ion-card {
+    background-color: $white-color;
+    border-radius: 10px;
+
+    ion-card-header {
+      ion-img {
+        margin-bottom: 6px;
+      }
+    }
+  };
+}
+
+ion-button {
+  font-weight: 300;
+}

@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lançamentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-label>Data</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="reportDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tipo lançamento</ion-label>
+    <ion-select [(ngModel)]="reportType">
+      <ion-select-option value="plt" selected>Plantão</ion-select-option>
+      <ion-select-option value="cirps">Cirurgias P.S</ion-select-option>
+      <ion-select-option value="cirel" selected>Cirurgias Eletiva</ion-select-option>
+      <ion-select-option value="amb">Ambulatório</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Plantão -->
+  <div *ngIf="reportType == 'plt'">
+      <ion-item>
+          <ion-label>Hora</ion-label>
+          <ion-datetime
+            displayFormat="HH:mm" 
+            pickerFormat="HH:mm" 
+            [(ngModel)]="plt.hour"
+          ></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Período</ion-label>
+        <ion-textarea [(ngModel)]="plt.period"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Carga</ion-label>
+        <ion-select [(ngModel)]="plt.carga">
+          <ion-select-option value="6" selected>6</ion-select-option>
+          <ion-select-option value="12">12</ion-select-option>
+        </ion-select>
+      </ion-item>
+  </div>
+
+  <!-- Cirurgias P.S -->
+  <div *ngIf="(reportType == 'cirps' || reportType == 'cirel')">
+
+    <ion-item>
+      <ion-label>Procedimento</ion-label>
+      <ion-select [(ngModel)]="cir.procedure">
+        <ion-select-option *ngFor="let p of procedures" value="{{ p.id }}">{{ p.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Equipe</ion-label>
+      <ion-select [(ngModel)]="cir.team" multiple>
+        <ion-select-option *ngFor="let d of doctors" value="{{ d.id }}">{{ d.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <!-- Ambulatório -->
+  <div *ngIf="reportType == 'amb'">
+    <ion-item>
+      <ion-label>Chamados</ion-label>
+      <ion-input [(ngModel)]="plt.call"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Consultas</ion-label>
+      <ion-input [(ngModel)]="plt.consultations"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Visitas</ion-label>
+      <ion-input [(ngModel)]="plt.visits"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Atendimentos</ion-label>
+      <ion-input [(ngModel)]="plt.medical_care"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Interconsultas</ion-label>
+      <ion-input [(ngModel)]="plt.inter_consultations"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Pequenas cirugias</ion-label>
+      <ion-input [(ngModel)]="plt.minor_surgeries"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Urodinâmica</ion-label>
+      <ion-input [(ngModel)]="plt.urodynamic"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Biopsia de prostata</ion-label>
+      <ion-input [(ngModel)]="plt.prostate_biopsy"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cirurgias pediátricas</ion-label>
+      <ion-input [(ngModel)]="plt.pediatric_surgery"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Avaliações noturnas</ion-label>
+      <ion-input [(ngModel)]="plt.night_assessment"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Outros</ion-label>
+      <ion-input [(ngModel)]="plt.anothers"></ion-input>
+    </ion-item>
+  </div>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button expland="block" (click)="getImages()">Adicionar Descrição</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="images">
+          <div class="one-image" *ngFor="let img of imageResponse">
+            <img src="{{img}}" alt="" srcset="">
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <br>
+
+  <div class="ion-padding" *ngIf="(reportDate && reportType)">
+    <ion-button expand="block" color="primary" (click)="submitReport()">Lançar dados</ion-button>
+  </div>
+
+</ion-content>

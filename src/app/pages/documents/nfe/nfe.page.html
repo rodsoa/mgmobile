@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Notas Fiscais</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div style="height: 100%">
+    <ngx-datatable style="height: 100%"
+                   class="material fullscreen"
+                   [rows]="rows"
+                   [columns]="cols"
+                   [columnMode]="'force'"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [rowHeight]="50"
+                   [limit]="15"
+                   [scrollbarV]="true"
+                   [sorts]="[{prop: 'name', dir: 'desc'}]"
+                   [selected]="selected"
+                   (activate)="onActivate($event)"
+    ></ngx-datatable>
+  </div>
+</ion-content>
+

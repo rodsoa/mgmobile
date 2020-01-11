@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Upload de Documento</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-item>
+      <ion-label position="floating">Nome do arquivo</ion-label>
+      <ion-input placeholder="nome-arquivo.pdf"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" style="margin-top:12px" (click)="getImages()">Arquivo</ion-button>
+    <ion-button expand="full" (click)="submit()">Upload</ion-button>
+</ion-content>
+

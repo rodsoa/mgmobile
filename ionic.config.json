@@ -1,0 +1,7 @@
+{
+  "name": "mgmobile",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
