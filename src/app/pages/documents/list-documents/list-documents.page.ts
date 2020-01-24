@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {FileUploadOptions, FileTransferObject, FileTransfer} from '@ionic-native/file-transfer/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 
 
@@ -22,9 +23,11 @@ export class ListDocumentsPage implements OnInit {
 
   constructor(
     private actionSheetController: ActionSheetController,
+    private androidPermissions: AndroidPermissions,
+    private alertCtrl: AlertController,
     private http: HttpClient,
-    private transfer: FileTransfer,
-    public file: File
+    private transfer: FileTransfer, 
+    private file: File
   ) {
     this.cols = [
       { prop: 'id', name: 'ID', width: 50},
@@ -67,7 +70,7 @@ export class ListDocumentsPage implements OnInit {
           text: 'Download',
           icon: 'download',
           handler: () => {
-            this.download(id, category);
+            this.getPermission(id, category);
             console.log('Download file clicked');
           }
         },
@@ -84,20 +87,61 @@ export class ListDocumentsPage implements OnInit {
     await actionSheet.present();
   }
 
-  download( id: any, category: any ) {
-    const endpoint = `${this.url}/${id}/download`;
-    const name = `${category}-${id}`;
+  async download( id: any, category: any ) {
+    const endpoint = `${this.url}/api/files/${id}/download`;
+    const name = `${id}.pdf`;
     const fileTransfer: FileTransferObject = this.transfer.create();
-    fileTransfer.download(endpoint, this.file.dataDirectory + name, false,
+    await fileTransfer.download(endpoint, this.file.externalRootDirectory + '/Download/' + name, false,
         {
           headers: {
             "Authorization": `Bearer ${this.token}`
           }
         }).then((entry) => {
       console.log('download complete: ' + entry.toURL());
+      console.log(endpoint);
+      this.successAlert(name, entry)
     }, (error) => {
-      // handle error
+      console.log(endpoint);
+      console.log(error);
+      this.failAlert();
     });
+  }
+
+  getPermission(id: any, category: any) {
+    this.androidPermissions.hasPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+      .then(status => {
+        if (status.hasPermission) {
+          this.download(id, category);
+        } 
+        else {
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+            .then(status => {
+              if(status.hasPermission) {
+                this.download(id, category);
+              }
+            });
+        }
+      });
+    }
+
+  async successAlert(name:any , entry: any) {
+    const alertSuccess = await this.alertCtrl.create({
+      header: `Download Realizado!`,
+      subHeader: `Arquivo ${name} foi transferido para: ${entry.toURL()}`,
+      buttons: ['Ok']
+    });
+
+    await alertSuccess.present();
+  }
+
+  async failAlert() {
+    const alertFail = await this.alertCtrl.create({
+      header: `Download Falhou!`,
+      subHeader: `Ocorreu um erro no processamento do pedido. Tente novamente em alguns instantes`,
+      buttons: ['Ok']
+    });
+
+    await alertFail.present();
   }
 
 }

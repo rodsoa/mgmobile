@@ -24,6 +24,13 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Hospital</ion-label>
+    <ion-select [(ngModel)]="reportHospital">
+      <ion-select-option *ngFor="let h of hospitals" value="{{ h.id }}">{{ h.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <!-- Plantão -->
   <div *ngIf="reportType == 'plt'">
       <ion-item>
@@ -58,7 +65,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Equipe</ion-label>
-      <ion-select [(ngModel)]="cir.team" multiple>
+      <ion-select [(ngModel)]="cir.team" multiple (ionChange)="onChangeTeam($event)">
         <ion-select-option *ngFor="let d of doctors" value="{{ d.id }}">{{ d.name }}</ion-select-option>
       </ion-select>
     </ion-item>

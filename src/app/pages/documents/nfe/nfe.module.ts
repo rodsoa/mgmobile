@@ -11,6 +11,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { NfePage } from './nfe.page';
 import {HttpClientModule} from '@angular/common/http';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
+    AndroidPermissions,
     File,
     FileTransfer
   ],

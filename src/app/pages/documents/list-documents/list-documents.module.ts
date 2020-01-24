@@ -10,7 +10,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { ListDocumentsPage } from './list-documents.page';
 import {HttpClientModule} from '@angular/common/http';
 import {FileTransfer} from '@ionic-native/file-transfer/ngx';
-import {File} from '@ionic-native/file/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxDatatableModule,
   ],
-  providers: [ File, FileTransfer ],
+  providers: [ AndroidPermissions, File, FileTransfer ],
   declarations: [ListDocumentsPage],
 })
 export class ListDocumentsPageModule {}

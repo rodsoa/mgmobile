@@ -19,6 +19,7 @@ export class ReportsPage implements OnInit {
 
   procedures: any;
   doctors: any;
+  hospitals: any;
 
   types: [
     {value: 'plt', name: 'Plantão'},
@@ -29,6 +30,7 @@ export class ReportsPage implements OnInit {
 
   reportDate: null;
   reportType: null;
+  reportHospital: null;
 
   plt: any = {carga: null, hour: null, period: null};
   cir: any = {procedure: null, description: null, team: null};
@@ -73,6 +75,15 @@ export class ReportsPage implements OnInit {
     this.token = sessionStorage.getItem('token');
 
     this.http.get(
+      this.url + '/api/hospitals',
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.token
+        })
+      }).subscribe( (response: any) => { this.hospitals = response; console.log( this.hospitals ); } );
+
+    this.http.get(
         this.url + '/api/doctors',
         {
           headers: new HttpHeaders({
@@ -113,6 +124,16 @@ export class ReportsPage implements OnInit {
 
   ionViewDidEnter() {
 
+  }
+
+  onChangeTeam(e) {
+    if (this.cir.team.length > 3 ) {
+      alert("Selecione apenas 3 integrantes para a equipe!");
+      this.cir.team = [];
+      e.target.value = null;
+    }
+
+    console.log(this.cir.team)
   }
 
   async presentLoading() {
