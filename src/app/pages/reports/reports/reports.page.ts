@@ -31,6 +31,8 @@ export class ReportsPage implements OnInit {
   reportDate: null;
   reportType: null;
   reportHospital: null;
+  reportPacient: null;
+  reportPacientNumber: null;
 
   plt: any = {carga: null, hour: null, period: null};
   cir: any = {procedure: null, description: null, team: null};
@@ -120,6 +122,15 @@ export class ReportsPage implements OnInit {
             'Authorization': 'Bearer ' + this.token
           })
         }).subscribe( (response: any) => { this.procedures = response; console.log( this.procedures ); } );
+
+    this.http.get(
+          this.url + '/api/reports',
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + this.token
+            })
+          }).subscribe( (response: any) => { console.table( response ); } );
   }
 
   ionViewDidEnter() {

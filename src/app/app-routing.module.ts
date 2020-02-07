@@ -14,10 +14,8 @@ const routes: Routes = [
 
     /* Telas dos Relatorios/Informes*/
   { path: 'reports', loadChildren: './pages/reports/reports/reports.module#ReportsPageModule' },
-  { path: 'edit-report', loadChildren: './pages/reports/edit-report/edit-report.module#EditReportPageModule' },
-  { path: 'view-report', loadChildren: './pages/reports/view-report/view-report.module#ViewReportPageModule' },
-  { path: 'add-report', loadChildren: './pages/reports/add-report/add-report.module#AddReportPageModule' },
-
+  { path: 'list-reports', loadChildren: './pages/reports/list-reports/list-reports.module#ListReportsPageModule' },
+    
   /* Telas das mensagens */
   { path: 'messages', loadChildren: './pages/messages/messages/messages.module#MessagesPageModule' },
   { path: 'view-message/:messageID', loadChildren: './pages/messages/view-message/view-message.module#ViewMessagePageModule' },

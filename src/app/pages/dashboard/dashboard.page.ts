@@ -13,6 +13,7 @@ export class DashboardPage implements OnInit {
   private token = null;
   public doctor = null;
   public menu = [
+    { name: 'Produção em curso', url: '/list-reports', icon: 'cloud-upload'},
     { name: 'Lancamentos', url: '/reports', icon: 'git-branch'},
     { name: 'Documentos', url: '/documents', icon: 'folder'},
     { name: 'NFe', url: '/nfe', icon: 'document'},
