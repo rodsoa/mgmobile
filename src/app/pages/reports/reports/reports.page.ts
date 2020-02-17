@@ -197,6 +197,25 @@ export class ReportsPage implements OnInit {
 
   submitReport(): void {
     this.presentLoading();
+
+    this.http.post(
+        this.url + '/api/reports',
+        {
+          date: this.reportDate,
+          type: this.reportType,
+          hospital: this.reportHospital,
+          pacient: this.reportPacient,
+          number: this.reportPacientNumber,
+          plt: this.plt,
+          amb: this.amb,
+          cir: this.cir
+        },
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.token
+          })
+        }).subscribe( (response: any) => { console.table( response ); } );
     setTimeout(() => {
       this.loadingController.dismiss();
       this.router.navigateByUrl('/dashboard');
