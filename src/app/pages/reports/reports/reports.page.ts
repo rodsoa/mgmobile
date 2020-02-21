@@ -33,9 +33,10 @@ export class ReportsPage implements OnInit {
   reportHospital: null;
   reportPacient: null;
   reportPacientNumber: null;
+  reportImages: any;
 
   plt: any = {carga: null, hour: null, period: null};
-  cir: any = {procedure: null, description: null, team: null};
+  cir: any = {procedure: null, description: null, team: null, images: null};
   amb: any = {
     calls: null,
     consultations: null,
@@ -188,8 +189,9 @@ export class ReportsPage implements OnInit {
     this.imagePicker.getPictures(this.options).then((results) => {
       for (var i = 0; i < results.length; i++) {
         this.imageResponse.push('data:image/jpeg;base64,' + results[i]);
-        this.cir = this.imageResponse; // redundante
       }
+
+      this.cir.images = this.imageResponse;
     }, (err) => {
       alert(err);
     });
