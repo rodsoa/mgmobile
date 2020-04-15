@@ -8,12 +8,11 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-item>
-      <ion-label position="floating">Nome do arquivo</ion-label>
-      <ion-input placeholder="nome-arquivo.pdf"></ion-input>
-    </ion-item>
+  <ion-item>
+    <ion-label position="floating">Nome do arquivo</ion-label>
+    <ion-input placeholder="nome-arquivo.pdf" [(ngModel)]="fileName"></ion-input>
+  </ion-item>
 
-    <ion-button expand="full" style="margin-top:12px" (click)="getImages()">Arquivo</ion-button>
-    <ion-button expand="full" (click)="submit()">Upload</ion-button>
+  <ion-button expand="full" style="margin-top: 12px;" (click)="selectDocument()">Arquivo</ion-button>
+  <ion-button expand="full" (click)="submit()">Upload</ion-button>
 </ion-content>
-
